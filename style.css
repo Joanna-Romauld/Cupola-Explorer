@@ -6,6 +6,49 @@ body {
     text-align: center;
 }
 
+.index-wrapper {
+    display: flex;
+    z-index: 1;
+    justify-content: center; 
+    align-items: center;     
+    min-height: 100vh;       
+    text-align: center;
+    background-color: #0b0c10; 
+}
+.index-wrapper h1 {
+    color: #66fcf1;
+    font-size: 3rem;
+    text-shadow: 0 0 5px #66fcf1, 0 0 10px #45a29e;
+    margin-bottom: 15px;
+}
+
+.index-wrapper h2 {
+    color: #45a29e;
+    font-size: 1.8rem;
+    text-shadow: 0 0 5px #45a29e;
+    margin-bottom: 20px;
+}
+
+.index-wrapper p {
+    font-size: 1.2rem;
+    color: #4e8892;
+    margin-bottom: 30px;
+}
+
+.container {
+     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
+    margin: 100px;
+  max-width: 1000px;
+  text-align: center;
+  background: rgba(20, 20, 30, 0.85);
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.3);
+}
+
 header {
     background-color: #1f2833;
     color: #66fcf1;
@@ -94,3 +137,4 @@ button:hover {
 .controls button {
     margin: 0 10px;
 }
+

@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>My Web Page</title>
+    <title>Cupola Explorer</title>
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 
     <!-- using Leaflet for maps(CSS) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
@@ -15,8 +15,15 @@
 </head>
 
 <body>
-    
+
+ <div class="index-wrapper">
+<div class = "container">
 <h1>Welcome to Cupola Explorer!</h1>
+<h2>Experience the breathtaking views of Earth from the International Space Station's Cupola.</h2>
+
+<h2> </h2>
+
+<p>Click the image below to explore the interactive map and see photos taken from the cupola.</p>
 
 <a href = "map.html"> 
     <img src = "https://images-assets.nasa.gov/image/iss038e013587/iss038e013587~small.jpg" 
@@ -25,10 +32,21 @@
 </a>
 <p>Image credit: NASA</p>
 
+<h2> OR </h2>
+
+<p>Try the Neutral Buoyancy Simulator to understand how astronauts train for spacewalks on Earth!</p>
+
+<a href = "buoyancy.html"> 
+    <img src = "images/NBS.jpg" 
+    alt = "Astronaut"
+    >
+</div>
+</div>
   <!-- using Leaflet for maps(JS) -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 
     <script src="script.js"></script>
+    <script src="stars_background.js"></script>
 </body>
 
 

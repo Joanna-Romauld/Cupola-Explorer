@@ -1,68 +1,51 @@
-// to check if we’re on map.html
+// -----------------------
+// CUPOLA MAP
+// -----------------------
 if (document.getElementById('map')) {
     const map = L.map('map').setView([0, 0], 2);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 5,
-        attribution: '© OpenStreetMap contributors'
+        maxZoom: 13,
+        attribution: '© OpenStreetMap contributors',
+        maxBounds: [[-90, -180], [90, 180]],
+        maxBoundsViscosity: 1.0,
+        noWrap: true,
     }).addTo(map);
 
-    // eexample nasa images with coordinates and data
-    const cupolaPhotos = [
-        {
-            coords: [40.7, -74.0],
-            title: "New York City, USA",
-            img: "https://images-assets.nasa.gov/image/iss042e135486/iss042e135486~medium.jpg",
-            desc: "A glittering night view of New York City as seen from the ISS."
-        },
-        {
-            coords: [35.6, 139.7],
-            title: "Tokyo, Japan",
-            img: "https://images-assets.nasa.gov/image/iss042e135486/iss042e135486~medium.jpg",
-            desc: "Tokyo lights up under the ISS orbit — home to over 37 million people."
-        },
-        {
-            coords: [-33.9, 151.2],
-            title: "Sydney, Australia",
-            img: "https://images-assets.nasa.gov/image/iss066e082724/iss066e082724~medium.jpg",
-            desc: "The Australian coast and city lights shimmer beneath the space station."
-        },
-        {
-            coords: [28.6, 77.2],
-            title: "New Delhi, India",
-            img: "https://images-assets.nasa.gov/image/iss067e054425/iss067e054425~medium.jpg",
-            desc: "India’s capital city, a vibrant mix of heritage and modernity."
-        },
-        {
-            coords: [48.85, 2.35],
-            title: "Paris, France",
-            img: "https://images-assets.nasa.gov/image/iss042e135486/iss042e135486~medium.jpg",
-            desc: "The ‘City of Light’ truly shines — captured by astronauts from orbit."
+  
+            const cupolaImages = [
+  { lat: 14.7, lng: 26.8, caption: "Meidob Volcanic Field, Sudan", url: "Images/ISS022-E-66972.jpg", desc: "A stunning view of the Meidob Volcanic Field in Sudan, showcasing the unique geological formations and volcanic activity in the region." },
+  { lat: -12.5, lng: 35.5, caption: "Lake Malawi, Mozambique", url: "Images/ISS023-E-32771 (1).jpg", desc: "An aerial view of Lake Malawi, one of the largest and most biodiverse lakes in Africa, located in Mozambique." },
+  { lat: 25.0, lng: -79.0, caption: "Florida Everglades", url: "Images/ISS025-E-13488.jpg", desc: "A breathtaking view of the Florida Everglades, a unique ecosystem known for its diverse wildlife and wetlands." },
+   { lat: 8.9, lng: -84.5, caption: "Pacific Ocean", url: "Images/ISS030-E-33277.jpg" , desc: "A mesmerizing view of the vast Pacific Ocean, highlighting its deep blue waters and expansive horizon."},
+   { lat: 29.4, lng: 98.8, caption: "Asia", url: "Images/ISS026-E-5407.jpg", desc: "A captivating view of Asia, showcasing its diverse landscapes and geographical features from above." },
+   { lat: 43.1, lng: 13.2, caption: "Italy", url: "Images/STS131-E-12892.jpg", desc: "A beautiful view of Italy, highlighting its rich cultural heritage and stunning landscapes." },
+];
+
+
+            const popup = document.getElementById('photo-popup');
+            const titleEl = document.getElementById('photo-title');
+            const imgEl = document.getElementById('photo-img');
+            const descEl = document.getElementById('photo-desc');
+            const closeBtn = document.getElementById('close-popup');
+
+            // Add markers
+            cupolaImages.forEach(loc => {
+                if (!isNaN(loc.lat) && !isNaN(loc.lng)) {
+                    const marker = L.marker([loc.lat, loc.lng]).addTo(map);
+                    marker.on('click', () => {
+                        titleEl.textContent = `${loc.caption}`;
+                        imgEl.src = loc.url;
+                        descEl.textContent = loc.desc;
+                        popup.classList.add('active');
+                    });
+                }
+            });
+
+            closeBtn.addEventListener('click', () => {
+                popup.classList.remove('active');
+            });
         }
-    ];
-
-    const popup = document.getElementById('photo-popup');
-    const titleEl = document.getElementById('photo-title');
-    const imgEl = document.getElementById('photo-img');
-    const descEl = document.getElementById('photo-desc');
-    const closeBtn = document.getElementById('close-popup');
-
-    cupolaPhotos.forEach(loc => {
-        const marker = L.marker(loc.coords).addTo(map);
-        marker.on('click', () => {
-            titleEl.textContent = loc.title;
-            imgEl.src = loc.img;
-            descEl.textContent = loc.desc;
-            popup.classList.add('active');
-        });
-    });
-
-    closeBtn.addEventListener('click', () => {
-        popup.classList.remove('active');
-    });
-}
-
-// to check if we’re on buoyancy.html
 if (document.getElementById('buoyancy-container')) {
     const astronaut = document.getElementById('astronaut');
     let floatLevel = 0;

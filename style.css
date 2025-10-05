@@ -30,6 +30,7 @@ nav a:hover {
 #map {
     height: 85vh;
     width: 100%;
+    border: 2px solid #26669b;
 }
 
 /* popup for the photo */

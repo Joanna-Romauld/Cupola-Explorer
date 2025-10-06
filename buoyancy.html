@@ -146,16 +146,16 @@
 
     // animation loop
     function animate() {
-      // Apply gravity each frame
+      // apply gravity each frame
       velocityY += gravity;
 
-      // Simulate water resistance
+      // simulate water resistance
       velocityY *= 0.98;
 
-      // Update position
+      // update position
       positionY += velocityY;
 
-      // Bounce gently at top and bottom limits
+      // bounce gently at top and bottom limits
       if (positionY < minY) {
         positionY = minY;
         velocityY = 0.8;

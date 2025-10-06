@@ -4,29 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neutral Buoyancy Simulator</title>
-
   <style>
-    /* === page styling only for buoy sim === */
+    /* === page === */
     body {
       margin: 0;
       overflow: hidden;
       font-family: 'Poppins', sans-serif;
       color: white;
-      text-align: center;
       background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
       height: 100vh;
-      position: relative;
-      animation: twinkle 10s infinite alternate;
-    }
-
-    @keyframes twinkle {
-      0% { background-color: #000010; }
-      100% { background-color: #000022; }
+      text-align: center;
     }
 
     header {
-      padding: 10px;
-      background: rgba(0, 0, 50, 0.6);
+      padding: 10px 0;
+      background: rgba(0, 0, 50, 0.7);
+      position: relative;
+      z-index: 100;
     }
 
     nav a {
@@ -40,10 +34,9 @@
       text-decoration: underline;
     }
 
-    /* Control buttons */
     .controls {
       position: absolute;
-      top: 80px;
+      top: 70px;
       width: 100%;
       text-align: center;
       z-index: 10;
@@ -66,7 +59,6 @@
       background-color: #63c5ff;
     }
 
-    /* Container for astronaut */
     #buoyancy-container {
       position: relative;
       width: 100%;
@@ -74,19 +66,16 @@
       overflow: hidden;
     }
 
-    /* Astronaut image */
     #astronaut {
       position: absolute;
       width: 100px;
       left: 50%;
       transform: translateX(-50%);
-      bottom: 50px;
     }
 
-    /* Instruction text */
     .instruction {
       position: absolute;
-      bottom: 30px;
+      bottom: 20px;
       width: 100%;
       color: #ddd;
       font-style: italic;
@@ -94,7 +83,6 @@
     }
   </style>
 </head>
-
 <body>
   <header>
     <h1>🧑‍🚀 Neutral Buoyancy Simulator</h1>
@@ -104,84 +92,77 @@
     </nav>
   </header>
 
-  <!-- buttons at the top -->
   <div class="controls">
     <button id="add-weight">Add Weight (Sink)</button>
     <button id="remove-weight">Remove Weight (Float)</button>
   </div>
 
-  <!-- buoyancy simulation area -->
   <div id="buoyancy-container">
     <img id="astronaut" src="images/Astronaut.png" alt="Astronaut">
     <p class="instruction">Adjust your buoyancy to simulate astronaut training in NASA’s Neutral Buoyancy Lab!</p>
   </div>
 
   <script>
-    // === realistic buoyancy simulation ===
-
     const astronaut = document.getElementById("astronaut");
 
-    let velocityY = 0; // current vertical velocity
-    let gravity = 0.15; // downward pull
-    let positionY = window.innerHeight / 2; // start mid-screen
-
-    // horizontal drift variables for realistic microgravity movement
-    let velocityX = 0.3;
-    let direction = 1;
-
-    // define vertical & horizontal boundaries
-    const minY = 0;
+    // physics variables
+    let velocityY = 0;      // vertical velocity
+    let gravity = 0.05;     // simulates slow descent in weightlessness
+    let positionY = window.innerHeight / 2; // start centered
+    const minY = 50;
     const maxY = window.innerHeight - 150;
+
+    // horizontal drift for realism
+    let velocityX = 0.2;
+    let direction = 1;
     const minX = window.innerWidth * 0.15;
     const maxX = window.innerWidth * 0.85;
 
-    // event listeners for the float and sink buttons
-    document.getElementById("add-weight").addEventListener("click", () => {
-      velocityY += 2; // sink faster
-    });
-
+    // float button: shoot upward
     document.getElementById("remove-weight").addEventListener("click", () => {
-      velocityY -= 3; // float upward
+      velocityY = -5; // strong upward impulse
     });
 
-    // animation loop
+    // sink button: accelerate downward
+    document.getElementById("add-weight").addEventListener("click", () => {
+      velocityY += 2; // increase downward speed
+    });
+
     function animate() {
-      // apply gravity each frame
+      // apply gravity
       velocityY += gravity;
 
-      // simulate water resistance
-      velocityY *= 0.98;
+      // simulate slight water resistance
+      velocityY *= 0.995;
 
-      // update position
+      // update vertical position
       positionY += velocityY;
 
-      // bounce gently at top and bottom limits
+      // boundaries
       if (positionY < minY) {
         positionY = minY;
-        velocityY = 0.8;
+        velocityY = 0; // stop upward movement
       }
       if (positionY > maxY) {
         positionY = maxY;
-        velocityY = -1.5;
+        velocityY = -1; // gentle bounce up
       }
 
-      // add gentle horizontal drifting
+      // horiz drifting
       let currentX = parseFloat(astronaut.style.left) || window.innerWidth / 2;
       currentX += velocityX * direction;
-      if (currentX < minX || currentX > maxX) direction *= -1; // reverse direction
+      if (currentX < minX || currentX > maxX) direction *= -1;
 
-      // update astronaut position
+      // update position
       astronaut.style.top = positionY + "px";
       astronaut.style.left = currentX + "px";
 
       requestAnimationFrame(animate);
     }
 
-    // initialize astronaut start position
-    astronaut.style.left = "50%";
     astronaut.style.top = positionY + "px";
+    astronaut.style.left = "50%";
 
-    // start animation
     animate();
   </script>
 </body>

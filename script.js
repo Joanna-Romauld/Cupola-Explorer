@@ -17,7 +17,7 @@ if (document.getElementById('map')) {
   { lat: 25.0, lng: -79.0, caption: "Florida Everglades", url: "images/ISS025-E-13488.jpg", desc: "A breathtaking view of the Florida Everglades! Those waters are super visible from space, although they can't see the unique ecosystem known for its diverse wildlife and wetlands." },
    { lat: 8.9, lng: -84.5, caption: "Pacific Ocean", url: "images/ISS030-E-33277.jpg" , desc: "A mesmerizing view of the vast Pacific Ocean! This is what its deep blue waters and expansive horizon look like from the ISS."},
    { lat: 29.4, lng: 98.8, caption: "Asia", url: "images/ISS026-E-5407.jpg", desc: "Asia from above! Although we can easily see the diverse landscapes and geographical features from Earth, from space, it's not so obvious." },
-   { lat: 43.1, lng: 13.2, caption: "Italy", url: "images/STS131-E-12892.jpg", desc: "From space, astronauts can't truly observe Italy's rich cultural heritage and stunning landscapes." },
+   { lat: 43.1, lng: 13.2, caption: "Italy", url: "images/STS131-E-12892.jpg", desc: "From space, astronauts can truly observe Italy's rich cultural heritage and stunning landscapes." },
 ];
 
 

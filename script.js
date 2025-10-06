@@ -14,12 +14,12 @@ if (document.getElementById('map')) {
 
   
             const cupolaImages = [
-  { lat: 14.7, lng: 26.8, caption: "Meidob Volcanic Field, Sudan", url: "images/ISS022-E-66972.jpg", desc: "A stunning view of the Meidob Volcanic Field in Sudan, showcasing the unique geological formations and volcanic activity in the region." },
+  { lat: 14.7, lng: 26.8, caption: "Meidob Volcanic Field, Sudan", url: "images/ISS022-E-66972.jpg", desc: "A stunning view of the Meidob Volcanic Field in Sudan, displaying the unique geological formations and volcanic activity in the region." },
   { lat: -12.5, lng: 35.5, caption: "Lake Malawi, Mozambique", url: "images/ISS023-E-32771 (1).jpg", desc: "An aerial view of Lake Malawi, one of the largest and most biodiverse lakes in Africa, located in Mozambique." },
-  { lat: 25.0, lng: -79.0, caption: "Florida Everglades", url: "images/ISS025-E-13488.jpg", desc: "A breathtaking view of the Florida Everglades, a unique ecosystem known for its diverse wildlife and wetlands." },
-   { lat: 8.9, lng: -84.5, caption: "Pacific Ocean", url: "images/ISS030-E-33277.jpg" , desc: "A mesmerizing view of the vast Pacific Ocean, highlighting its deep blue waters and expansive horizon."},
-   { lat: 29.4, lng: 98.8, caption: "Asia", url: "images/ISS026-E-5407.jpg", desc: "A captivating view of Asia, showcasing its diverse landscapes and geographical features from above." },
-   { lat: 43.1, lng: 13.2, caption: "Italy", url: "images/STS131-E-12892.jpg", desc: "A beautiful view of Italy, highlighting its rich cultural heritage and stunning landscapes." },
+  { lat: 25.0, lng: -79.0, caption: "Florida Everglades", url: "images/ISS025-E-13488.jpg", desc: "A breathtaking view of the Florida Everglades! Those waters are super visible from space, although they can't see the unique ecosystem known for its diverse wildlife and wetlands." },
+   { lat: 8.9, lng: -84.5, caption: "Pacific Ocean", url: "images/ISS030-E-33277.jpg" , desc: "A mesmerizing view of the vast Pacific Ocean! This is what its deep blue waters and expansive horizon look like from the ISS."},
+   { lat: 29.4, lng: 98.8, caption: "Asia", url: "images/ISS026-E-5407.jpg", desc: "Asia from above! Although we can easily see the diverse landscapes and geographical features from Earth, from space, it's not so obvious." },
+   { lat: 43.1, lng: 13.2, caption: "Italy", url: "images/STS131-E-12892.jpg", desc: "From space, astronauts can't truly observe Italy's rich cultural heritage and stunning landscapes." },
 ];
 
 
@@ -107,3 +107,4 @@ document.querySelector('a[href="map.html"]').addEventListener('click', function(
         window.location.href = this.href;
     }, 800);
 });
+

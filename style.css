@@ -127,23 +127,32 @@ button:hover {
     background: #66fcf1;
 }
 
-/* buyoancy sim */
 #buoyancy-container {
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    position: relative;
+    height: 100vh;        
+    width: 100%;
+    overflow: visible;   
+    z-index: 1;         
 }
 
 #astronaut {
-    width: 100px;
+    position: absolute; 
+    left: 50%;          
+    top: 50%;           
+    transform: translate(-50%, -50%); 
     transition: transform 0.5s ease;
+    z-index: 50;       
 }
 
+
 .controls {
-    margin-top: 20px;
+    position: absolute;  /* overlayed on page */
+    top: 170px;           /* below header */
+    width: 100%;
+    text-align: center;
+    z-index: 200;        /* above header and astronaut */
 }
+
 
 .controls button {
     margin: 0 10px;
@@ -182,11 +191,16 @@ button:hover {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(1);
-    width: auto;
-    height: auto;
-    max-width: 100vw;
-    max-height: 100vh;
+    transform: translate(-50%, -50%) scale(1); /* center and scale */
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;     /* cover full viewport without stretching */
     transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
     z-index: 1000;
+    opacity: 0;            /* start invisible */
+}
+
+.zoom-transition.active {
+    transform: translate(-50%, -50%) scale(1.05); /* slight zoom in */
+    opacity: 1;
 }

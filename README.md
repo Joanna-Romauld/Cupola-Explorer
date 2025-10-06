@@ -1,2 +1,2 @@
 # Cupola-Explorer
-## Link to project: https://joanna-romauld.github.io/Cupola-Explorer/
+## Link to website: https://joanna-romauld.github.io/Cupola-Explorer/

@@ -138,6 +138,7 @@ button:hover {
 
 #astronaut {
     width: 100px;
+    position: absolute; 
     transition: transform 0.5s ease;
 }
 

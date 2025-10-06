@@ -151,17 +151,17 @@ button:hover {
     margin: 0 10px;
 }
 
-/* STARFIELD */
+
 .starfield {
-    position: fixed;       /* absolute so it scrolls with the page */
+    position: fixed;     
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 100%;         /* grows with page content */
-    z-index: 0;               /* behind everything */
-    pointer-events: none;     /* clicks go through */
+    min-height: 100%;         
+    z-index: 0;               
+    pointer-events: none;     
     overflow: hidden;
-    background: radial-gradient(circle at top, #0b0c10, #000000); /* optional subtle gradient */
+    background: radial-gradient(circle at top, #0b0c10, #000000); 
 }
 
 .starfield span {

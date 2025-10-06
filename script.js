@@ -1,6 +1,4 @@
-// -----------------------
-// CUPOLA MAP
-// -----------------------
+
 if (document.getElementById('map')) {
     const map = L.map('map').setView([0, 0], 2);
 

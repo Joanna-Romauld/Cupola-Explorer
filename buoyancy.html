@@ -9,7 +9,7 @@ body {
     margin: 0;
     font-family: "Poppins", sans-serif;
     color: #c5c6c7;
-    background: #0b0c10;
+    background: linear-gradient(to bottom, #0b3d91, #0b2a6f);
     overflow: hidden;
 }
 
@@ -35,33 +35,25 @@ nav a:hover {
     color: #66fcf1;
 }
 
-.container {
-    display: flex;
+#water-container {
+    position: relative;
     width: 100%;
     height: calc(100vh - 80px);
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-#water, #space {
-    flex: 1;
-    position: relative;
-    overflow: hidden;
-}
-
-#water {
-    background: linear-gradient(to bottom, #0b3d91, #0b2a6f);
-}
-
-#space {
-    background: radial-gradient(circle at center, #0b0c10, #000);
+#astronaut {
+    width: 80px;
+    position: absolute;
+    cursor: grab;
 }
 
 .controls {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
+    margin-top: 200px;
+    text-align: center;
 }
 
 button {
@@ -71,19 +63,19 @@ button {
     padding: 10px 15px;
     border-radius: 8px;
     cursor: pointer;
-    margin: 0 5px;
+    margin: 10px;
 }
 
 button:hover {
     background: #66fcf1;
 }
 
-#astronaut {
-    width: 80px;
-    position: absolute;
-    top: 50%;
-    left: 25%;
-    cursor: grab;
+.instructions {
+    color: #c5c6c7;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 20px;
+    max-width: 600px;
 }
 </style>
 </head>
@@ -97,31 +89,27 @@ button:hover {
   </nav>
 </header>
 
-<div class="container">
-  <div id="water">
-    <div class="controls">
+<div id="water-container">
+  <div class="instructions">
+    Adjust your buoyancy using the buttons to simulate how astronauts train underwater in NASA’s Neutral Buoyancy Lab. Drag you astronaut around!
+  </div>
+  <img id="astronaut" src="images/Astronaut.png" alt="Astronaut">
+  <div class="controls">
       <button id="jump">Jump</button>
       <button id="add-weight">Add Weight</button>
-    </div>
   </div>
-  <div id="space"></div>
-  <img id="astronaut" src="images/Astronaut.png" alt="Astronaut">
 </div>
 
 <script>
 const astronaut = document.getElementById("astronaut");
-const water = document.getElementById("water");
-const space = document.getElementById("space");
+const container = document.getElementById("water-container");
 const jumpBtn = document.getElementById("jump");
 const weightBtn = document.getElementById("add-weight");
 
 // Water physics
 let velocityY = 0;
-const gravity = 0.05;
-
-// Space floating
-let floatVX = (Math.random()*2-1)*0.3;
-let floatVY = (Math.random()*2-1)*0.3;
+const gravity = 0.06; 
+const damping = 0.98;
 
 // Dragging
 let dragging = false;
@@ -142,55 +130,47 @@ document.addEventListener("mousemove", e => {
     }
 });
 
-// Buttons (only work if astronaut is in water side)
-jumpBtn.addEventListener("click", () => {
-    const centerX = astronaut.offsetLeft + astronaut.offsetWidth/2;
-    if(centerX < window.innerWidth/2) velocityY = -3;
-});
-weightBtn.addEventListener("click", () => {
-    const centerX = astronaut.offsetLeft + astronaut.offsetWidth/2;
-    if(centerX < window.innerWidth/2) velocityY += 2;
-});
+// Buttons
+jumpBtn.addEventListener("click", () => velocityY = -4);
+weightBtn.addEventListener("click", () => velocityY += 2);
 
 // Animate function
 function animate(){
-    const centerX = astronaut.offsetLeft + astronaut.offsetWidth/2;
-    const centerY = astronaut.offsetTop + astronaut.offsetHeight/2;
+    velocityY += gravity;
+    velocityY *= damping;
+    let newTop = astronaut.offsetTop + velocityY;
 
-    if(centerX < window.innerWidth/2){
-        // Water side: bob and sink
-        velocityY += gravity;
-        let newTop = astronaut.offsetTop + velocityY;
-        const waterHeight = water.offsetHeight - astronaut.offsetHeight;
-        if(newTop > waterHeight) { newTop = waterHeight; velocityY = 0; }
-        if(newTop < 0) { newTop = 0; velocityY = 0; }
-        astronaut.style.top = newTop + "px";
-    } else {
-        // Space side: float randomly
-        let newLeft = astronaut.offsetLeft + floatVX;
-        let newTop = astronaut.offsetTop + floatVY;
-        const spaceRect = space.getBoundingClientRect();
-        const astroWidth = astronaut.offsetWidth;
-        const astroHeight = astronaut.offsetHeight;
+    const maxTop = container.offsetHeight - astronaut.offsetHeight;
+    if(newTop > maxTop) { newTop = maxTop; velocityY = 0; }
+    if(newTop < 0) { newTop = 0; velocityY = 0; }
 
-        if(newLeft < spaceRect.left) { newLeft = spaceRect.left; floatVX *= -1; }
-        if(newLeft + astroWidth > spaceRect.right) { newLeft = spaceRect.right - astroWidth; floatVX *= -1; }
-        if(newTop < spaceRect.top) { newTop = spaceRect.top; floatVY *= -1; }
-        if(newTop + astroHeight > spaceRect.bottom) { newTop = spaceRect.bottom - astroHeight; floatVY *= -1; }
-
-        astronaut.style.left = newLeft + "px";
-        astronaut.style.top = newTop + "px";
-    }
+    astronaut.style.top = newTop + "px";
 
     requestAnimationFrame(animate);
 }
 
 // Start position
-astronaut.style.left = "25%";
+astronaut.style.left = (container.offsetWidth/2 - astronaut.offsetWidth/2) + "px";
 astronaut.style.top = "50%";
 
 animate();
 </script>
+
+<style>
+
+
+.instructions {
+    color: #c5c6c7;
+    font-family: "Poppins", sans-serif;
+    font-size: 1.2rem;          
+    line-height: 1.6;           
+    text-align: center;
+    margin-bottom: 30px;
+    max-width: 600px;
+    text-shadow: 0 0 5px #45a29e;  /
+}
+</style>
+
 
 </body>
 </html>

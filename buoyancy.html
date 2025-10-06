@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Neutral Buoyancy Simulator</title>
   <style>
-    /* === page === */
+    /* === PAGE STYLING === */
     body {
       margin: 0;
       overflow: hidden;
@@ -34,19 +34,20 @@
       text-decoration: underline;
     }
 
+    /* Controls placed below header */
     .controls {
       position: absolute;
-      top: 70px;
+      top: 80px; /* below header */
       width: 100%;
       text-align: center;
-      z-index: 10;
+      z-index: 50;
     }
 
     .controls button {
       background-color: #1e90ff;
       border: none;
-      padding: 10px 20px;
-      margin: 0 5px;
+      padding: 12px 25px;
+      margin: 0 8px;
       color: white;
       border-radius: 10px;
       cursor: pointer;
@@ -94,7 +95,7 @@
 
   <div class="controls">
     <button id="add-weight">Add Weight (Sink)</button>
-    <button id="remove-weight">Remove Weight (Float)</button>
+    <button id="jump">Jump (Float)</button>
   </div>
 
   <div id="buoyancy-container">
@@ -105,40 +106,39 @@
   <script>
     const astronaut = document.getElementById("astronaut");
 
-    // physics variables
-    let velocityY = 0;      // vertical velocity
-    let gravity = 0.05;     // simulates slow descent in weightlessness
-    let positionY = window.innerHeight / 2; // start centered
+    // Physics variables
+    let velocityY = 0;              // vertical velocity
+    const gravity = 0.03;           // slow downward pull to simulate weightlessness
+    let positionY = window.innerHeight / 2; // start centered vertically
     const minY = 50;
     const maxY = window.innerHeight - 150;
 
-    // horizontal drift for realism
+    // Horizontal drift for realism
     let velocityX = 0.2;
     let direction = 1;
     const minX = window.innerWidth * 0.15;
     const maxX = window.innerWidth * 0.85;
 
-    // float button: shoot upward
-    document.getElementById("remove-weight").addEventListener("click", () => {
-      velocityY = -5; // strong upward impulse
+    // Buttons functionality
+    document.getElementById("jump").addEventListener("click", () => {
+      velocityY = -5; // float upward
     });
 
-    // sink button: accelerate downward
     document.getElementById("add-weight").addEventListener("click", () => {
-      velocityY += 2; // increase downward speed
+      velocityY += 2; // sink faster
     });
 
     function animate() {
-      // apply gravity
+      // gravity
       velocityY += gravity;
 
-      // simulate slight water resistance
+      // water resistance
       velocityY *= 0.995;
 
       // update vertical position
       positionY += velocityY;
 
-      // boundaries
+      // vert boundaries
       if (positionY < minY) {
         positionY = minY;
         velocityY = 0; // stop upward movement
@@ -148,18 +148,19 @@
         velocityY = -1; // gentle bounce up
       }
 
-      // horiz drifting
+      // horiz drift
       let currentX = parseFloat(astronaut.style.left) || window.innerWidth / 2;
       currentX += velocityX * direction;
       if (currentX < minX || currentX > maxX) direction *= -1;
 
-      // update position
+      // astronaut position
       astronaut.style.top = positionY + "px";
       astronaut.style.left = currentX + "px";
 
       requestAnimationFrame(animate);
     }
 
+    // astronaut at center
     astronaut.style.top = positionY + "px";
     astronaut.style.left = "50%";
 

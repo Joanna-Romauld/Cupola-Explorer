@@ -1,32 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buoyancy Simulator</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neutral Buoyancy Simulator</title>
 
+  <style>
+    /* === PAGE STYLING ONLY FOR BUOYANCY SIMULATOR === */
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      text-align: center;
+      background: radial-gradient(ellipse at bottom, #0d1b2a 0%, #000000 100%);
+      height: 100vh;
+      position: relative;
+      animation: twinkle 10s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      0% { background-color: #000010; }
+      100% { background-color: #000022; }
+    }
+
+    header {
+      padding: 10px;
+      background: rgba(0, 0, 50, 0.6);
+    }
+
+    nav a {
+      margin: 0 15px;
+      color: #a5d8ff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    /* Control buttons */
+    .controls {
+      position: absolute;
+      top: 80px;
+      width: 100%;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .controls button {
+      background-color: #1e90ff;
+      border: none;
+      padding: 10px 20px;
+      margin: 0 5px;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .controls button:hover {
+      transform: scale(1.1);
+      background-color: #63c5ff;
+    }
+
+    /* Container for astronaut */
+    #buoyancy-container {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Astronaut image */
+    #astronaut {
+      position: absolute;
+      width: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 50px;
+    }
+
+    /* Instruction text */
+    .instruction {
+      position: absolute;
+      bottom: 30px;
+      width: 100%;
+      color: #ddd;
+      font-style: italic;
+      font-size: 1.1em;
+    }
+  </style>
 </head>
 
 <body>
-    <header>
-        <h1>🧑‍🚀 Neutral Buoyancy Simulator</h1>
-        <nav>
-            <a href="index.html">🏠 Home</a>
-            <a href="map.html"> Cupola Map</a>
-        </nav>
-    </header>
+  <header>
+    <h1>🧑‍🚀 Neutral Buoyancy Simulator</h1>
+    <nav>
+      <a href="index.html">🏠 Home</a>
+      <a href="map.html">🌍 Cupola Map</a>
+    </nav>
+  </header>
 
-    <div id="buoyancy-container">
-        <img id="astronaut" src="images/Astronaut.png" alt="Astronaut">
-        <div class="controls">
-            <button id="add-weight">Add Weight (Sink)</button>
-            <button id="remove-weight">Remove Weight (Float)</button>
-        </div>
-        <p>Adjust your buoyancy to simulate astronaut training in NASA’s Neutral Buoyancy Lab!</p>
-    </div>
+  <!-- buttons at the top -->
+  <div class="controls">
+    <button id="add-weight">Add Weight (Sink)</button>
+    <button id="remove-weight">Remove Weight (Float)</button>
+  </div>
 
-    <script src="script.js"></script>
+  <!-- buoyancy simulation area -->
+  <div id="buoyancy-container">
+    <img id="astronaut" src="images/Astronaut.png" alt="Astronaut">
+    <p class="instruction">Adjust your buoyancy to simulate astronaut training in NASA’s Neutral Buoyancy Lab!</p>
+  </div>
+
+  <script>
+    // === realistic buoyancy simulation ===
+
+    const astronaut = document.getElementById("astronaut");
+
+    let velocityY = 0; // current vertical velocity
+    let gravity = 0.15; // downward pull
+    let positionY = window.innerHeight / 2; // start mid-screen
+
+    // horizontal drift variables for realistic microgravity movement
+    let velocityX = 0.3;
+    let direction = 1;
+
+    // define vertical & horizontal boundaries
+    const minY = 0;
+    const maxY = window.innerHeight - 150;
+    const minX = window.innerWidth * 0.15;
+    const maxX = window.innerWidth * 0.85;
+
+    // event listeners for the float and sink buttons
+    document.getElementById("add-weight").addEventListener("click", () => {
+      velocityY += 2; // sink faster
+    });
+
+    document.getElementById("remove-weight").addEventListener("click", () => {
+      velocityY -= 3; // float upward
+    });
+
+    // animation loop
+    function animate() {
+      // Apply gravity each frame
+      velocityY += gravity;
+
+      // Simulate water resistance
+      velocityY *= 0.98;
+
+      // Update position
+      positionY += velocityY;
+
+      // Bounce gently at top and bottom limits
+      if (positionY < minY) {
+        positionY = minY;
+        velocityY = 0.8;
+      }
+      if (positionY > maxY) {
+        positionY = maxY;
+        velocityY = -1.5;
+      }
+
+      // add gentle horizontal drifting
+      let currentX = parseFloat(astronaut.style.left) || window.innerWidth / 2;
+      currentX += velocityX * direction;
+      if (currentX < minX || currentX > maxX) direction *= -1; // reverse direction
+
+      // update astronaut position
+      astronaut.style.top = positionY + "px";
+      astronaut.style.left = currentX + "px";
+
+      requestAnimationFrame(animate);
+    }
+
+    // initialize astronaut start position
+    astronaut.style.left = "50%";
+    astronaut.style.top = positionY + "px";
+
+    // start animation
+    animate();
+  </script>
 </body>
 </html>
-

@@ -79,3 +79,31 @@ for (let i = 0; i < numberOfStars; i++) {
     star.style.animationDuration = 2 + Math.random() * 3 + 's';
     starfield.appendChild(star);
 }
+
+
+document.querySelector('a[href="map.html"]').addEventListener('click', function(e) {
+    e.preventDefault(); 
+
+    const img = this.querySelector('img');
+    const rect = img.getBoundingClientRect();
+
+    img.style.position = 'fixed';
+    img.style.top = rect.top + 'px';
+    img.style.left = rect.left + 'px';
+    img.style.width = rect.width + 'px';
+    img.style.height = rect.height + 'px';
+    img.style.transition = 'all 0.8s ease-in-out';
+    img.style.zIndex = 10000;
+
+    img.getBoundingClientRect();
+
+    img.style.top = '50%';
+    img.style.left = '50%';
+    img.style.transform = 'translate(-50%, -50%) scale(2)'; 
+    img.style.width = '';
+    img.style.height = '';
+
+    setTimeout(() => {
+        window.location.href = this.href;
+    }, 800);
+});

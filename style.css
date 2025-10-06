@@ -1,19 +1,21 @@
 body {
     margin: 0;
     font-family: "Poppins", sans-serif;
-    background-color: #0b0c10;
     color: #c5c6c7;
     text-align: center;
+    background: radial-gradient(circle at top, #0b0c10, #000000);
+    overflow-x: hidden;
 }
 
 .index-wrapper {
+    position: relative;
     display: flex;
     z-index: 1;
     justify-content: center; 
     align-items: center;     
     min-height: 100vh;       
     text-align: center;
-    background-color: #0b0c10; 
+    ; 
 }
 .index-wrapper h1 {
     color: #66fcf1;
@@ -29,6 +31,16 @@ body {
     margin-bottom: 20px;
 }
 
+.index-wrapper h3 {
+    color: #4e8892;
+    font-size: 1.4rem;
+    margin: 20px 0;
+    line-height: 1.5;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .index-wrapper p {
     font-size: 1.2rem;
     color: #4e8892;
@@ -41,7 +53,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 50px;
-    margin: 100px;
+    margin: 100px auto;
   max-width: 1000px;
   text-align: center;
   background: rgba(20, 20, 30, 0.85);
@@ -138,3 +150,31 @@ button:hover {
     margin: 0 10px;
 }
 
+/* STARFIELD */
+.starfield {
+    position: fixed;       /* absolute so it scrolls with the page */
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;         /* grows with page content */
+    z-index: 0;               /* behind everything */
+    pointer-events: none;     /* clicks go through */
+    overflow: hidden;
+    background: radial-gradient(circle at top, #0b0c10, #000000); /* optional subtle gradient */
+}
+
+.starfield span {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: white;
+    opacity: 0.8;
+    animation: twinkle 5s infinite alternate;
+}
+
+@keyframes twinkle {
+    0% { opacity: 0.2; }
+    50% { opacity: 1; }
+    100% { opacity: 0.2; }
+}

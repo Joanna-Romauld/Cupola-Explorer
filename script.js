@@ -65,3 +65,17 @@ if (document.getElementById('buoyancy-container')) {
     });
 }
 
+const starfield = document.querySelector('.starfield');
+const numberOfStars = 150; // adjust for density
+const viewportHeight = window.innerHeight;
+
+for (let i = 0; i < numberOfStars; i++) {
+    const star = document.createElement('span');
+    star.style.top = Math.random() * viewportHeight + 'px';
+    star.style.left = Math.random() * 100 + '%';
+    const size = Math.random() * 2 + 1;
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+    star.style.animationDuration = 2 + Math.random() * 3 + 's';
+    starfield.appendChild(star);
+}
